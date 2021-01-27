@@ -69,6 +69,12 @@ class Product
      */
     private $reviews_list;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="product")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
+
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
@@ -214,6 +220,18 @@ class Product
                 $reviewsList->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
