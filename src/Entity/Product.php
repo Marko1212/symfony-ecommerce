@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -61,6 +63,17 @@ class Product
      * @ORM\Column(type="integer", nullable=true)
      */
     private $special_offer;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Review::class, mappedBy="product", orphanRemoval=true)
+     */
+    private $reviews_list;
+
+    public function __construct()
+    {
+        $this->reviews = new ArrayCollection();
+        $this->reviews_list = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -174,4 +187,35 @@ class Product
 
         return $this;
     }
+
+    /**
+     * @return Collection|Review[]
+     */
+    public function getReviewsList(): Collection
+    {
+        return $this->reviews_list;
+    }
+
+    public function addReviewsList(Review $reviewsList): self
+    {
+        if (!$this->reviews_list->contains($reviewsList)) {
+            $this->reviews_list[] = $reviewsList;
+            $reviewsList->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReviewsList(Review $reviewsList): self
+    {
+        if ($this->reviews_list->removeElement($reviewsList)) {
+            // set the owning side to null (unless already changed)
+            if ($reviewsList->getProduct() === $this) {
+                $reviewsList->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

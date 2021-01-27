@@ -25,12 +25,24 @@ class Review
     /**
      * @ORM\Column(type="datetime")
      */
-    private $login_date;
+    private $creation_review;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $mark;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $comment;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="reviews_list")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $product;
+
 
     public function getUsername(): ?string
     {
@@ -44,15 +56,54 @@ class Review
         return $this;
     }
 
-    public function getLoginDate(): ?\DateTimeInterface
+    public function getCreationReview(): ?\DateTimeInterface
     {
-        return $this->login_date;
+        return $this->creation_review;
     }
 
-    public function setLoginDate(\DateTimeInterface $login_date): self
+    public function setCreationReview(\DateTimeInterface $creation_review): self
     {
-        $this->login_date = $login_date;
+        $this->creation_review = $creation_review;
 
         return $this;
     }
+
+    public function getMark(): ?int
+    {
+        return $this->mark;
+    }
+
+    public function setMark(int $mark): self
+    {
+        $this->mark = $mark;
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): self
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?Product $product): self
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+
+
 }
