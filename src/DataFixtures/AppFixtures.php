@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Category;
 use App\Entity\Product;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -28,16 +29,25 @@ class AppFixtures extends Fixture
             $manager->persist($category);
         }
 
-        /* #DEBUT [GENERATION DES FIXTURES] */
-            foreach($i = 1; $i <= 150; $i++){
+        /* #DEBUT [GENERATION DES FIXTURES PRODUCT] */
+            for($i = 1; $i <= 150; $i++){
                 $product = new Product();
+
 
                 /* #DEBUT [GENERATION DES DONNEES FAKE] */
                     $category = $this->getReference('cat-'.rand(0, count($categoryNames) - 1));
                     $name = $faker->sentence($nbWors = 4, true);
                     $description = $faker->paragraph($nb = 3, false);
                     $price = $faker->numberBetween($min = 5, $max = 2000);
-                    $date = 
+                    $dateProduct = $faker->unixTime($max ='now');
+                    $crush = $faker->boolean(10); 
+                    for($i = 1; $i <= $faker->randomDigitNotNull(); $i++){
+                        $colors[] = $faker->safeColorName();
+                    }
+                    $image = $faker->randomElement([
+                        'defautl.jfif', 'fixtures/animalerie.jpg', 'fixtures/bricolage.jfif', 'fixtures/jardinage.jfif','fixtures/multimedia.jfif', 'fixtures/papeterie.jfif'
+                    ]);
+                    
                 /* #FIN [GENERATION DES DONNEES FAKE] */
 
                 /* #DEBUT [SETTING DES DONNEES FAKE] */
@@ -46,7 +56,7 @@ class AppFixtures extends Fixture
 
 
             }
-         /* #FIN [GENERATION DES FIXTURES] */
+         /* #FIN [GENERATION DES FIXTURES PRODUCT] */
 
 
 
