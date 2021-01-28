@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Category;
 use App\Entity\Product;
+use App\Entity\Review;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -29,14 +30,14 @@ class AppFixtures extends Fixture
             $manager->persist($category);
         }
 
-        /* #DEBUT [GENERATION DES FIXTURES PRODUCT] */
+       /* #DEBUT [GENERATION DES FIXTURES PRODUCT] */
             for($i = 1; $i <= 150; $i++){
                 $product = new Product();
 
 
-                /* #DEBUT [GENERATION DES DONNEES FAKE] */
+                /* #DEBUT [GENERATION DES DONNEES PRODUCTS] */
                     $category = $this->getReference('cat-'.rand(0, count($categoryNames) - 1));
-                    $name = $faker->sentence($nbWors = 4, true);
+                    $name = $faker->sentence($nbWords = 4, true);
                     $description = $faker->paragraph($nb = 3, false);
                     $price = $faker->numberBetween($min = 5, $max = 2000);
                     $dateProduct = $faker->unixTime($max ='now');
@@ -45,20 +46,55 @@ class AppFixtures extends Fixture
                         $colors[] = $faker->safeColorName();
                     }
                     $image = $faker->randomElement([
-                        'defautl.jfif', 'fixtures/animalerie.jpg', 'fixtures/bricolage.jfif', 'fixtures/jardinage.jfif','fixtures/multimedia.jfif', 'fixtures/papeterie.jfif'
+                        'default.jfif', 'fixtures/animalerie.jpg', 'fixtures/bricolage.jfif', 'fixtures/jardinage.jfif','fixtures/multimedia.jfif', 'fixtures/papeterie.jfif'
                     ]);
-                    
-                /* #FIN [GENERATION DES DONNEES FAKE] */
+                    if($faker->boolean(15)){
+                        $specialOffer = $faker->numberBetween(10, 80);
+                    }
 
-                /* #DEBUT [SETTING DES DONNEES FAKE] */
-                    $category->setSlug($this->slugger->slug($name));
-                /* #FIN [SETTING DES DONNEES FAKE] */
+                    /* #DEBUT [GENERATION DES FIXTURES REVIEWS] */
+                    for($i = 0; $i <= $faker->randomDigit(); $i++) {
+                        $review = new Review();
+
+                        /* #DEBUT [GENERATION DES DONNEES REVIEWS] */
+                        $username = $faker->firstName();
+                        $dateReview = $faker->unixTime();
+                        $mark = $faker->numberBetween(1, 5);
+                        $comment = $faker->text(150);
+
+                        /* #FIN [GENERATION DES DONNEES REVIEWS] */
+
+                        /* #DEBUT [SETTING DES REVIEWS] */
+                         $review->setProduct($product);
+                         $review->setUsername($username);
+                         $review->setCreationReview($dateReview);
+                         $review->setMark($mark);
+                         $review->setComment($comment);
+                         $manager->persist($review);
+                        /* #FIN [SETTING DES REVIEWS] */
+
+                    }
+                    /* #FIN [GENERATION DES FIXTURES REVIEWS] */
+                    
+                /* #FIN [GENERATION DES DONNEES PRODUCTS] */
+
+                /* #DEBUT [SETTING DES DONNEES PRODUCTS] */
+                    $product->setSlug($this->slugger->slug($name));
+                    $product->setName($name);
+                    $product->setDescription($description);
+                    $product->setPrice($price);
+                    $product->setCreationDate($dateProduct);
+                    $product->setCrush($crush);
+                    $product->setColorList($colors);
+                    $product->setUrlImage($image);
+                    $product->setSpecialOffer($specialOffer);
+                    $product->setCategory($category);
+                    $manager->persist($product);
+                /* #FIN [SETTING DES DONNEES PRODUCTS] */
 
 
             }
          /* #FIN [GENERATION DES FIXTURES PRODUCT] */
-
-
 
         $manager->flush();
     }
