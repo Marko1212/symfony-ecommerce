@@ -17,21 +17,21 @@
         <!-- DEBUT [NAVBAR] -->
         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="index.html">Ecommerce</a>
+                <a class="navbar-brand" href="{{ path('index') }}">Ecommerce</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html">Accueil</a>
+                        <li class="nav-item {{ app.request.get('_route') == 'index' ? 'active' }}">
+                            <a class="nav-link" href="{{ path('index') }}">Accueil</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="products.html">Produits</a>
+                        <li class="nav-item {{ app.request.get('_route') == 'product_list' ? 'active' }}" >
+                            <a class="nav-link" href="{{ path('product_list') }}">Produits</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Contact</a>
+                        <li class="nav-item {{ app.request.get('_route') == '' ? 'active' }}">
+                            <a class="nav-link" href="">Contact</a>
                         </li>
                     </ul>
 

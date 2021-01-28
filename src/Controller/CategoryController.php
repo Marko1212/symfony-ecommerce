@@ -21,9 +21,14 @@ class CategoryController extends AbstractController
 
         $products = $repositoryProduct->findBy([ 'category' => $category->getId()]);
 
+        $repository = $this->getDoctrine()->getRepository(Product::class);
+        $allProduct = $repository->findAll();
+        $lastProduct = end($allProduct);
+
 
         return $this->render('category/show.html.twig', [
             'products' => $products,
+            'lastProduct' => $lastProduct,
         ]);
     }
 }
