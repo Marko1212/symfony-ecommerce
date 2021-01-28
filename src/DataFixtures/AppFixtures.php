@@ -14,12 +14,14 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class AppFixtures extends Fixture
 {
     private $slugger;
+
     public function __construct(SluggerInterface $slugger)
     {
         $this->slugger = $slugger;
     }
     public function load(ObjectManager $manager)
     {
+        
         // On crée une instance de Faker pour générer la donnée aléatoire
         $faker = Factory::create('fr_FR');
         $categoryNames = ['multimédia', 'jouets pour animaux', 'bricolage', 'jardinage', 'papeterie'];
@@ -41,25 +43,30 @@ class AppFixtures extends Fixture
                     $name = $faker->sentence($nbWords = 4, true);
                     $description = $faker->paragraph($nb = 3, false);
                     $price = $faker->numberBetween($min = 5, $max = 2000);
-                    $dateProduct = $faker->unixTime($max ='now');
+                    $dateProduct = new DateTime('NOW');
                     $crush = $faker->boolean(10); 
-                    for($i = 1; $i <= $faker->randomDigitNotNull(); $i++){
-                        $colors[] = $faker->safeColorName();
+                    $colors = [];
+                    $randomIntProduct = $faker->randomDigitNotNull();
+                    for($j = 1; $j <= $randomIntProduct ; $j++){
+                        $colors[] = $faker->colorName();
                     }
                     $image = $faker->randomElement([
                         'default.jfif', 'fixtures/animalerie.jpg', 'fixtures/bricolage.jfif', 'fixtures/jardinage.jfif','fixtures/multimedia.jfif', 'fixtures/papeterie.jfif'
                     ]);
                     if($faker->boolean(15)){
-                        $specialOffer = $faker->numberBetween(10, 80);
+                        $specialOffer = $faker->numberBetween($min = 10, $max = 80);
+                    }else{
+                        $specialOffer = null;
                     }
 
                     /* #DEBUT [GENERATION DES FIXTURES REVIEWS] */
-                    for($i = 0; $i <= $faker->randomDigit(); $i++) {
+                    $randomInt = $faker->randomDigit();
+                    for($k = 0; $k <= $randomInt; $k++) {
                         $review = new Review();
 
                         /* #DEBUT [GENERATION DES DONNEES REVIEWS] */
                         $username = $faker->firstName();
-                        $dateReview = $faker->unixTime();
+                        $dateReview = new dateTime('NOW');
                         $mark = $faker->numberBetween(1, 5);
                         $comment = $faker->text(150);
 
@@ -81,7 +88,7 @@ class AppFixtures extends Fixture
                 /* #FIN [GENERATION DES DONNEES PRODUCTS] */
 
                 /* #DEBUT [SETTING DES DONNEES PRODUCTS] */
-                    $product->setSlug($this->slugger->slug($name));
+                    $product->setSlug($this->slugger->slug($name)->lower());
                     $product->setName($name);
                     $product->setDescription($description);
                     $product->setPrice($price);
