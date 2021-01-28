@@ -29,6 +29,8 @@ class AppFixtures extends Fixture
             $manager->persist($category);
         }
 
+        
+
         /* #DEBUT [GENERATION DES FIXTURES PRODUCT] */
             for($i = 1; $i <= 150; $i++){
                 $product = new Product();
@@ -47,6 +49,11 @@ class AppFixtures extends Fixture
                     $image = $faker->randomElement([
                         'defautl.jfif', 'fixtures/animalerie.jpg', 'fixtures/bricolage.jfif', 'fixtures/jardinage.jfif','fixtures/multimedia.jfif', 'fixtures/papeterie.jfif'
                     ]);
+                    if($faker->boolean(15)){
+                        $specialOffer = $faker->numberBetween(10, 80);
+                    }
+
+                    
                     
                 /* #FIN [GENERATION DES DONNEES FAKE] */
 
