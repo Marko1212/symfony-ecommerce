@@ -15,13 +15,12 @@ class CategoryController extends AbstractController
     /**
      * @Route("/category/{option}", name="category_show")
      */
-     public function show(ProductRepository $repository, $option, CategoryRepository $categoryRepository): Response
+     public function show(ProductRepository $repositoryProduct, $option, CategoryRepository $categoryRepository): Response
     {
         $category = $categoryRepository->findOneBy(['name' => $option]);
-        
-        dump($category->getId());
-        $products = $repository->findBy([ 'category' => $category->getId()]);
-        dump($products);
+
+        $products = $repositoryProduct->findBy([ 'category' => $category->getId()]);
+
 
         return $this->render('category/show.html.twig', [
             'products' => $products,
