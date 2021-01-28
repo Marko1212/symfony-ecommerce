@@ -25,10 +25,12 @@ class CategoryController extends AbstractController
         $allProduct = $repository->findAll();
         $lastProduct = end($allProduct);
 
+        $categories = $categoryRepository->findAll();
 
         return $this->render('category/show.html.twig', [
             'products' => $products,
             'lastProduct' => $lastProduct,
+            'categories' => $categories,
         ]);
     }
 }

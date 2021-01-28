@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,12 +19,18 @@ class ProductController extends AbstractController
     {
 
         $repository = $this->getDoctrine()->getRepository(Product::class);
+
         $products = $repository->findAll();
         $lastProduct = end($products);
+
+        $categoryRepository = $this->getDoctrine()->getRepository(Category::class);
+        $categories = $categoryRepository->findAll();
+
 
         return $this->render('product/list.html.twig', [
             'products' => $products,
             'lastProduct' => $lastProduct,
+            'categories' => $categories,
         ]);
 
     }
