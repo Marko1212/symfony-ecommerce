@@ -40,9 +40,15 @@ class AppFixtures extends Fixture
 
                 /* #DEBUT [GENERATION DES DONNEES PRODUCTS] */
                     $category = $this->getReference('cat-'.rand(0, count($categoryNames) - 1));
-                    $name = $faker->sentence($nbWords = 4, true);
-                    $description = $faker->paragraph($nb = 3, false);
-                    $price = $faker->numberBetween($min = 5, $max = 2000);
+                    $name = '';
+                    while (strlen($name) < 3) {
+                        $name = $faker->sentence($nbWords = 4, true);
+                    }
+                    $description = '';
+                    while (strlen($description) < 10) {
+                        $description = $faker->paragraph($nb = 3, false);
+                    }
+                    $price = $faker->numberBetween($min = 99, $max = 2000);
                     $dateProduct = new DateTime('NOW');
                     $crush = $faker->boolean(10); 
                     $colors = [];
