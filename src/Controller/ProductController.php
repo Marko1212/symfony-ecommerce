@@ -27,9 +27,11 @@ class ProductController extends AbstractController
 
         $repository = $this->getDoctrine()->getRepository(Product::class);
         $products = $repository->findAll();
+        $lastProduct = end($products);
 
         return $this->render('product/list.html.twig', [
             'products' => $products,
+            'lastProduct' => $lastProduct,
         ]);
 
     }
