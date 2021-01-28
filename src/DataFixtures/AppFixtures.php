@@ -31,6 +31,7 @@ class AppFixtures extends Fixture
         }
 
        /* #DEBUT [GENERATION DES FIXTURES PRODUCT] */
+
             for($i = 1; $i <= 150; $i++){
                 $product = new Product();
 
@@ -75,6 +76,7 @@ class AppFixtures extends Fixture
 
                     }
                     /* #FIN [GENERATION DES FIXTURES REVIEWS] */
+
                     
                 /* #FIN [GENERATION DES DONNEES PRODUCTS] */
 
