@@ -9,15 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController
 {
-    /**
-     * @Route("/product", name="product_show")
-     */
-    public function show(): Response
-    {
-        return $this->render('product/show.html.twig', [
-            'controller_name' => 'ProductController',
-        ]);
-    }
+    
 
     /**
      * @Route("/products", name="product_list")
@@ -33,4 +25,25 @@ class ProductController extends AbstractController
         ]);
 
     }
+
+    /**
+     * @Route("/product/{slug}_{id}", name="product_show", requirements={"slug"="[a-z0-9\-]*"})
+     */
+    public function show(Product $product)
+    {
+        $countReview = count($product->getReviewsList());
+        $mark = 0;
+        for($i = 0; $i < $countReview; $i++){
+            $mark += $product->getReviewsList()[$i]->getMark();
+        }
+        $mark = $mark / $countReview;
+     
+
+        return $this->render('product/show.html.twig', [
+            'product' => $product,
+            'countReview' => $countReview,
+            'mark' => $mark,
+        ]);
+    }
+    
 }
