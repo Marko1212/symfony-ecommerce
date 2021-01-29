@@ -66,7 +66,17 @@
         <!-- DEBUT [BANDEROLE] -->
         <section class="jumbotron text-center">
             <div class="container">
+                {% if app.request.get('_route') == 'index' %}
                 <h1 class="jumbotron-heading">Ecommerce</h1>
+                    {% elseif app.request.get('_route') == 'product_list' %}
+                        <h1 class="jumbotron-heading">Produits</h1>
+                    {% elseif app.request.get('_route') == 'contact' %}
+                        <h1 class="jumbotron-heading">Contact</h1>
+                        {% elseif app.request.get('_route') == 'product_show' %}
+                            <h1 class="jumbotron-heading">{{ product.name }}</h1>
+                            {% elseif app.request.get('_route') == 'category_show' %}
+                                <h1 class="jumbotron-heading">{{ app.request.get('option') | capitalize }}</h1>
+                {% endif %}
                 <p class="lead text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum delectus ad quae cumque voluptates dolorum, neque eveniet, placeat obcaecati magnam vel fugit nulla autem, mollitia consequuntur praesentium sit? Veniam, facere.</p>
             </div>
         </section>
