@@ -47,5 +47,14 @@ class ProductRepository extends ServiceEntityRepository
         ;
     }
     */
+  public function findAleasProducts($image)
+  {
+      $query = $this->createQueryBuilder('p')
+            ->orderBy('RAND()')
+            ->setMaxResults(3)
+            ->getQuery();
 
+      return $query->getResult();
+
+  }
 }
