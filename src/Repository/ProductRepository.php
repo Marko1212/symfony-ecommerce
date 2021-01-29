@@ -47,7 +47,11 @@ class ProductRepository extends ServiceEntityRepository
         ;
     }
     */
-  public function findAleasProducts($image)
+
+    /**
+     * Permet d'obtenir 3 produits aléatoires dans la BDD
+     */
+  public function findAleasProducts()
   {
       $query = $this->createQueryBuilder('p')
             ->orderBy('RAND()')
@@ -57,4 +61,33 @@ class ProductRepository extends ServiceEntityRepository
       return $query->getResult();
 
   }
+
+    /**
+     * Permet d'obtenir un coup de coeur aléatoire dans la BDD
+     */
+    public function findOneAleaCrush()
+    {
+        $query = $this->createQueryBuilder('p')
+            ->where('p.crush = true')
+            ->orderBy('RAND()')
+            ->setMaxResults(1)
+            ->getQuery();
+
+        return $query->getResult();
+
+    }
+
+    /**
+     * Permet d'obtenir les 4 derniers produits dans la BDD
+     */
+    public function findlastProducts()
+    {
+        $query = $this->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC')
+            ->setMaxResults(4)
+            ->getQuery();
+
+        return $query->getResult();
+
+    }
 }
