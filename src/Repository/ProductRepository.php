@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Repository;
 
 use App\Entity\Product;
@@ -51,15 +50,17 @@ class ProductRepository extends ServiceEntityRepository
     /**
      * Permet d'obtenir 3 produits aléatoires dans la BDD
      */
+
     public function findAleasProducts()
     {
         $query = $this->createQueryBuilder('p')
+
             ->orderBy('RAND()')
             ->setMaxResults(3)
             ->getQuery();
 
-        return $query->getResult();
 
+        return $query->getResult();
     }
 
     /**
@@ -101,8 +102,8 @@ class ProductRepository extends ServiceEntityRepository
             $qb->orWhere('p.color_list LIKE :color_'.$color)->setParameter('color_'.$color, '%'.$color.'%');
         }
 
-           // $colors = implode(", ", $filters);
-           // $qb->where('p.color_list IN (:colors)')->setParameter('colors', $colors);
+        // $colors = implode(", ", $filters);
+        // $qb->where('p.color_list IN (:colors)')->setParameter('colors', $colors);
 
 
         return $qb->getQuery()->getResult();
@@ -113,7 +114,7 @@ class ProductRepository extends ServiceEntityRepository
 
         $qb = $this->createQueryBuilder('p');
 
-       // $colors = implode(", ", $filters);
+        // $colors = implode(", ", $filters);
 
         foreach($filters as $color) {
             $qb->orWhere('p.color_list LIKE :color_'.$color)->setParameter('color_'.$color, '%'.$color.'%');
@@ -124,7 +125,6 @@ class ProductRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
-
-
+    //A suivre...
 
 }
