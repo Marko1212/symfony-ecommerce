@@ -125,6 +125,6 @@ class ProductRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
-    //A suivre...
+//A suivre
 
 }
