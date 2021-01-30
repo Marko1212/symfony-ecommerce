@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Review;
+use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -47,4 +48,10 @@ class ReviewRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+    /**
+     * Permet d'obtenir les 4 meilleurs produits dans la BDD
+     */
+
 }
