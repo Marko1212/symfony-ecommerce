@@ -3,12 +3,29 @@
                     <div class="card-header bg-primary text-white text-uppercase"><i class="fa fa-list"></i> Filtres</div>
                     <form action="" method="post">
                         <ul class="list-group">
-                            <li class="list-group-item">
+                            {% set arrayColorsWithoutDuplicates = [] %}
+                            {% for product in products %}
+                                {% for color in product.colorlist %}
+                                    {% if color not in arrayColorsWithoutDuplicates %}
+                                   {% set selected = false %}
+                                    {% for couleur in app.request.request.get('colors') %}
+                                        {% if color == couleur %}
+                                            {% set selected = true %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    <li class="list-group-item">
+
                                 <div class="form-check">
-                                    <input type="checkbox" name="color[]" value="bleu" class="form-check-input" id="color-bleu">
-                                    <label class="form-check-label" for="color-bleu">Bleu</label>
+                                    <input type="checkbox" name="colors[]" {% if selected %}checked{% endif %} value="{{ color }}" class="form-check-input" id="color-{{ color }}">
+                                    <label class="form-check-label" for="color-{{ color }}">{{ color | capitalize }}</label>
+                                        {% set arrayColorsWithoutDuplicates = arrayColorsWithoutDuplicates|merge([color]) %}
+
                                 </div>
-                            </li>
+                          </li>
+                                    {% endif %}
+                            {% endfor %}
+                            {% endfor %}
+                            {#
                             <li class="list-group-item">
                                 <div class="form-check">
                                     <input type="checkbox" name="color[]" value="rouge" class="form-check-input" id="color-red">
@@ -21,6 +38,7 @@
                                     <label class="form-check-label" for="color-vert">Vert</label>
                                 </div>
                             </li>
+                            #}
                             <li class="list-group-item">
                                 <button class="btn btn-primary btn-block">Filtrer</button>
                             </li>
