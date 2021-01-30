@@ -54,4 +54,14 @@ class ReviewRepository extends ServiceEntityRepository
      * Permet d'obtenir les 4 meilleurs produits dans la BDD
      */
 
+    public function findBestProducts()
+    {
+        $query = $this->getEntityManager()->createQuery('SELECT AVG(r.mark) as avg, p.name, p.slug, p.price, p.url_image, p.description, p.id
+                FROM App\Entity\Review r
+                JOIN App\Entity\Product p WHERE p.id = r.product
+                GROUP BY r.product 
+                ORDER BY avg DESC');
+        $query->setMaxResults(4);
+        return $query->getResult();
+    }
 }
