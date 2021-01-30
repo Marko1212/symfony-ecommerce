@@ -7,6 +7,7 @@ use App\Entity\Product;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,7 +16,7 @@ class CategoryController extends AbstractController
     /**
      * @Route("/category/{option}", name="category_show")
      */
-     public function show(ProductRepository $repositoryProduct, $option, CategoryRepository $categoryRepository): Response
+     public function show(ProductRepository $repositoryProduct, $option, CategoryRepository $categoryRepository, Request $request): Response
     {
         $category = $categoryRepository->findOneBy(['name' => $option]);
 
@@ -24,6 +25,14 @@ class CategoryController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(Product::class);
         $allProduct = $repository->findAll();
         $lastProduct = end($allProduct);
+
+        if (!empty($request->get('colors'))) {
+
+            $products = $repository->findAllPerCategoryWithFilters(
+                $request->get('colors'),
+                $category->getId()
+            );
+        }
 
         $categories = $categoryRepository->findAll();
 
