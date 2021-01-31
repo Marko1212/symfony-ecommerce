@@ -62,5 +62,14 @@ class ProductController extends AbstractController
             'mark' => $mark,
         ]);
     }
+
+    /**
+     * @Route("/admin/product/new", name="product_create")
+     */
+    public function create(): Response
+    {
+        return $this->render('product/create.html.twig');
+    }
+
     
 }
