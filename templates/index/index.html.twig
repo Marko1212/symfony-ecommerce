@@ -96,7 +96,7 @@
                             {% for product in bestProducts %}
                                 <div class="col-sm">
                                     <div class="card">
-                                        <img class="card-img-top" src="{{ asset('img/' ~ product.urlimage) }}" alt="{{ product.name }}">
+                                        <img class="card-img-top" src="{{ asset('img/' ~ product.url_image) }}" alt="{{ product.name }}">
                                         <div class="card-body">
                                             <h4 class="card-title"><a href="{{ path('product_show', { slug : product.slug, id : product.id}) }}" title="View Product">{{ product.name }}</a></h4>
                                             <p class="card-text">{{ product.description }}</p>
