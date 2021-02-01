@@ -5,19 +5,23 @@ namespace App\DataFixtures;
 use App\Entity\Category;
 use App\Entity\Product;
 use App\Entity\Review;
+use App\Entity\User;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AppFixtures extends Fixture
 {
     private $slugger;
+    private $passwordEncoderInterface;
 
-    public function __construct(SluggerInterface $slugger)
+    public function __construct(SluggerInterface $slugger, UserPasswordEncoderInterface $passwordEncoderInterface)
     {
         $this->slugger = $slugger;
+        $this->passwordEncoderInterface = $passwordEncoderInterface;
     }
     public function load(ObjectManager $manager)
     {
@@ -31,6 +35,17 @@ class AppFixtures extends Fixture
             $this->addReference('cat-'.$index, $category);
             $manager->persist($category);
         }
+
+        /* #DEBUT [USER] */
+            $user = new User();
+            $user->setUsername($faker->name());
+            $user->setEmail($faker->email());
+            $user->setRoles(['ROLE_ADMIN']);
+            $user->setPassword($this->passwordEncoderInterface->encodePassword($user, 'test'));
+            $this->addReference('user-0', $user);
+            $manager->persist($user);
+
+        /* #FIN [USER] */
         
 
        /* #DEBUT [GENERATION DES FIXTURES PRODUCT] */
@@ -85,6 +100,7 @@ class AppFixtures extends Fixture
                          $review->setCreationReview($dateReview);
                          $review->setMark($mark);
                          $review->setComment($comment);
+                         $review->setUser($user);
                          $manager->persist($review);
                         /* #FIN [SETTING DES REVIEWS] */
 
