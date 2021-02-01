@@ -43,6 +43,11 @@ class Review
      */
     private $product;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="review")
+     */
+    private $user;
+
 
     public function getUsername(): ?string
     {
@@ -100,6 +105,18 @@ class Review
     public function setProduct(?Product $product): self
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -31,6 +31,7 @@ class AppFixtures extends Fixture
             $this->addReference('cat-'.$index, $category);
             $manager->persist($category);
         }
+        
 
        /* #DEBUT [GENERATION DES FIXTURES PRODUCT] */
 
