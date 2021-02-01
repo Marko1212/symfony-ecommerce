@@ -32,9 +32,15 @@
                     <div class="card-header bg-success text-white text-uppercase">
                         <i class="fa fa-heart"></i> Coup de coeur
                     </div>
-                    <img class="img-fluid border-0" src="{{ asset('img/') ~ aleaCrush.urlimage }}" alt="aleaCrush.name">
+                    <img id="img-card" class="img-fluid border-0" src="{{ asset('img/') ~ aleaCrush.urlimage }}" alt="aleaCrush.name">
                     <div class="card-body">
-                        <h4 class="card-title text-center"><a href="{{ path('product_show', { slug : aleaCrush.slug, id : aleaCrush.id}) }}" title="View Product">{{ aleaCrush.name }}</a></h4>
+                        <h4 class="card-title text-center"><a href="{{ path('product_show', { slug : aleaCrush.slug, id : aleaCrush.id}) }}" title="View Product">
+                                {% if aleaCrush.name | length > 15 %}
+                                    {{ aleaCrush.name | slice(0, 15) }}...
+                                {% else %}
+                                    {{ aleaCrush.name }}
+                                {% endif %}
+                            </a></h4>
                         <div class="row">
                             <div class="col">
                                 <p class="btn btn-danger btn-block">{{ aleaCrush.price }} &euro;</p>
@@ -61,7 +67,7 @@
                             {% for product in lastProducts %}
                                 <div class="col-sm">
                                     <div class="card">
-                                        <img class="card-img-top" src="{{ asset('img/' ~ product.urlimage) }}" alt="{{ product.name }}">
+                                        <img id="img-card" class="card-img-top" src="{{ asset('img/' ~ product.urlimage) }}" alt="{{ product.name }}">
                                         <div class="card-body">
                                             <h4 class="card-title"><a href="{{ path('product_show', { slug : product.slug, id : product.id}) }}" title="View Product">{{ product.name }}</a></h4>
                                             <p class="card-text">{{ product.description }}</p>
@@ -96,7 +102,7 @@
                             {% for product in bestProducts %}
                                 <div class="col-sm">
                                     <div class="card">
-                                        <img class="card-img-top" src="{{ asset('img/' ~ product.url_image) }}" alt="{{ product.name }}">
+                                        <img id="img-card" class="card-img-top" src="{{ asset('img/' ~ product.url_image) }}" alt="{{ product.name }}">
                                         <div class="card-body">
                                             <h4 class="card-title"><a href="{{ path('product_show', { slug : product.slug, id : product.id}) }}" title="View Product">{{ product.name }}</a></h4>
                                             <p class="card-text">{{ product.description }}</p>

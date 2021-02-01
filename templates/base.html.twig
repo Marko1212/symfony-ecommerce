@@ -32,8 +32,8 @@
                 <li class="nav-item {{ app.request.get('_route') == 'product_list' ? 'active' }}" >
                     <a class="nav-link" href="{{ path('product_list') }}">Produits</a>
                 </li>
-                <li class="nav-item {{ app.request.get('_route') == '' ? 'active' }}">
-                    <a class="nav-link" href="">Contact</a>
+                <li class="nav-item {{ app.request.get('_route') == 'contact' ? 'active' }}">
+                    <a class="nav-link" href="{{ path('contact') }}">Contact</a>
                 </li>
             </ul>
 
@@ -53,11 +53,17 @@
             </form>
 
             <ul class="navbar-nav pl-3">
+                {% if app.user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+                    </li>
+                {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Connexion</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Inscription</a>
+                    <a class="nav-link" href="{{ path('app_logout') }}">Inscription</a>
                 </li>
             </ul>
         </div>
@@ -84,12 +90,17 @@
             <h1 class="jumbotron-heading">{{ product.name }}</h1>
         {% elseif app.request.get('_route') == 'category_show' %}
             <h1 class="jumbotron-heading">{{ app.request.get('option') | capitalize }}</h1>
+        {% elseif app.request.get('_route') == 'category_create' %}
+            <h1 class="jumbotron-heading">{{ "Ajouter une catégorie" | capitalize }}</h1>
+        {% elseif app.request.get('_route') == 'category_edit' %}
+            <h1 class="jumbotron-heading">{{ "Modifier une catégorie" | capitalize }}</h1>
         {% endif %}
         <p class="lead text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum delectus ad quae cumque voluptates dolorum, neque eveniet, placeat obcaecati magnam vel fugit nulla autem, mollitia consequuntur praesentium sit? Veniam, facere.</p>
     </div>
 </section>
 <!-- FIN [BANDEROLE] -->
 
+<!-- DEBUT [MESSAGES FLASH] -->
 <div class="container">
     {% for label, messages in app.flashes %}
         {% for message in messages %}
@@ -98,6 +109,7 @@
             </div>
         {% endfor %}
     {% endfor %}
+
 {% block body %}{% endblock %}
 </div>
 <!-- DEBUT [FOOTER] -->

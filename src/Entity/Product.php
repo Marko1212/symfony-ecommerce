@@ -79,20 +79,20 @@ class Product
     private $special_offer;
 
     /**
-     * @ORM\OneToMany(targetEntity=Review::class, mappedBy="product", orphanRemoval=true)
-     */
-    private $reviews_list;
-
-    /**
      * @Assert\NotBlank
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="product")
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
 
+    /*
+     * @ORM\OneToMany(targetEntity=Review::class, mappedBy="product", orphanRemoval=true)                 
+     */
+    private $reviews_list;
+
+
     public function __construct()
     {
-        $this->reviews = new ArrayCollection();
         $this->reviews_list = new ArrayCollection();
     }
 
@@ -209,6 +209,18 @@ class Product
         return $this;
     }
 
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Review[]
      */
@@ -239,16 +251,15 @@ class Product
         return $this;
     }
 
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
 
-    public function setCategory(?Category $category): self
-    {
-        $this->category = $category;
 
-        return $this;
-    }
+
+
+
+
+
+
+
+
 
 }

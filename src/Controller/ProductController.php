@@ -4,7 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Product;
+
 use App\Form\ProductType;
+
+use App\Entity\Review;
+use App\Form\ReviewType;
+use App\Repository\ProductRepository;
+use DateTime;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,7 +54,7 @@ class ProductController extends AbstractController
     /**
      * @Route("/product/{slug}_{id}", name="product_show", requirements={"slug"="[a-z0-9\-]*"})
      */
-    public function show(Product $product)
+    public function show(Product $product, Request $request, $id, $slug, ProductRepository $productRepository)
     {
         $countReview = count($product->getReviewsList());
 
@@ -60,10 +67,32 @@ class ProductController extends AbstractController
             $mark = $mark / $countReview;
         }
 
+        $review = new Review();
+        $formReview = $this->createForm(ReviewType::class, $review);
+        $formReview->handleRequest($request);
+        
+        $product = $productRepository->find($id);
+
+        /* Faire le requète pour l'ajout de la review ici */
+        /* #DEBUT [REQUEST FOR ADD REVIEW] */
+            if($formReview->isSubmitted() && $formReview->isValid()){
+                $review->setProduct($product);
+                $review->setCreationReview(new DateTime('NOW'));
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($review);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('product_show', ['slug' => $slug, 'id' => $id]);
+            }
+        /* #FIN [REQUEST FOR ADD REVIEW] */
+
+
         return $this->render('product/show.html.twig', [
             'product' => $product,
             'countReview' => $countReview,
             'mark' => $mark,
+            'formReview' => $formReview->createView(),
+            
         ]);
     }
 
