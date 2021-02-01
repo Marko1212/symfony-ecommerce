@@ -84,6 +84,7 @@ class Product
     private $reviews_list;
 
     /**
+     * @Assert\NotBlank
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="product")
      * @ORM\JoinColumn(nullable=false)
      */

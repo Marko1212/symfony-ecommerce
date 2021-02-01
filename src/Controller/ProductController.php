@@ -110,5 +110,66 @@ class ProductController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/admin/product/edit/{id}", name="product_edit")
+     */
+    public function edit(Request $request, Product $product)
+    {
+        //On doit vérifier que l'utilisateur connecté a bien le droit de modifier le produit
+
+/*         if ($this->getUser()!==$product->getOwner()) {
+            throw $this->createAccessDeniedException(); // Renvoie une 403
+        } */
+
+        $form = $this->createForm(ProductType::class, $product);
+
+        // Faire le traitement du formulaire
+
+        //on écrit les données de la requête dans l'objet $form
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // pas besoin de faire de persist...Doctrine va détecter
+            // automatiquement qu'il doit faire un UPDATE
+            // ATTENTION si on change le slug aux histoires de redirection (sites de e-commerce...)
+
+            $image = $form->get('url_image')->getData();
+            if (trim($image) !== '') {
+                $product->setUrlImage($image);
+            } else {
+                $product->setUrlImage('default.jfif');
+            }
+
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', 'L\'annonce a bien été modifiée');
+            return $this->redirectToRoute('product_list');
+        }
+        return $this->render('product/edit.html.twig', [
+            'productForm' => $form->createView(),
+            'product' => $product,
+        ]);
+
+    }
+
+    /**
+     * @Route("/admin/product/delete/{id}", name="product_delete")
+     */
+    public function delete(Request $request, Product $product)
+    {
+        if ($this->isCsrfTokenValid('delete' . $product->getId(), $request->get('_token'))) {
+
+            $entityManager = $this->getDoctrine()->getManager();
+
+            $entityManager->remove($product);
+    
+            $entityManager->flush();
+    
+            $this->addFlash('danger', 'Le produit a bien été supprimé');
+
+        }
+
+        return $this->redirectToRoute('product_list');                      
+    }
+
     
 }

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Modifier un produit</h1>
+    {{ form_start(productForm) }}
+    {{ form_widget(productForm) }}
+    <div class="text-center my-4">
+    <button class="btn btn-primary" formnovalidate>Modifier</button>
+    </div>
+    {{ form_end(productForm) }}
+{% endblock %}
