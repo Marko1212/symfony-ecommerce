@@ -4,3 +4,12 @@
     font-weight: bold;
     font-size: 150%;
 }
+
+#img-carousel {
+    width: 855px;
+    height: 365px;
+}
+
+#img-card {
+    height: 165px;
+}
