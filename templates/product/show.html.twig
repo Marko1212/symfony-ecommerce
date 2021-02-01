@@ -21,7 +21,6 @@
             <div class="col-12 col-lg-6 add_to_cart_block">
                 <div class="card bg-light mb-3">
                     <div class="card-body">
-                        <p class="price">{{ product.price * (product.specialoffer / 100) }} &euro;</p>
                         {% if product.specialoffer == 0 %}
                         <p class="price_discounted">{{ product.price }} &euro;</p>
                         {% else %}
@@ -104,7 +103,7 @@
                 <div class="card border-light mb-3">
                     <div class="card-header bg-primary text-white text-uppercase"><i class="fa fa-comment"></i> Avis</div>
                     <div class="card-body">
-                        {% for review in product.reviewslist|slice(0, 2) %}
+                        {% for review in product.reviewslist %}
                             <div class="review">
                                 <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                                 <meta itemprop="datePublished" content="01-01-2016">{{ review.creationreview|date('d/m/Y') }}
@@ -129,7 +128,6 @@
                                 {{ form_label(formReview.username, null, {
                                     'label_attr': {'class': ''}
                                     }) }}
-                                {{ form_errors(formReview.username) }}
                                 {{ form_widget(formReview.username, {'attr': {'class': 'form-control'}}) }}
                             </div>
                             
@@ -137,7 +135,6 @@
                                 {{ form_label(formReview.mark, null, {
                                     'label_attr': {'class': ''}
                                     }) }}
-                                {{ form_errors(formReview.mark) }}
                                 {{ form_widget(formReview.mark, {'attr': {'class': 'form-control'}}) }}
                             </div>
                                 
@@ -145,7 +142,6 @@
                                 {{ form_label(formReview.comment, null, {
                                     'label_attr': {'class': ''}
                                     }) }}
-                                {{ form_errors(formReview.comment) }}
                                 {{ form_widget(formReview.comment, {'attr': {'class': 'form-control'}}) }}
                             </div>
                                
