@@ -85,7 +85,7 @@ class Product
      */
     private $category;
 
-    /*
+    /**
      * @ORM\OneToMany(targetEntity=Review::class, mappedBy="product", orphanRemoval=true)                 
      */
     private $reviews_list;
