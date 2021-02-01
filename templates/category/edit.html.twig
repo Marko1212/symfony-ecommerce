@@ -1,0 +1,32 @@
+{% extends 'base.html.twig'%}
+
+{%  block body %}
+    <h1 class="text-center my-4">
+        {% if path('category_create') %}
+                Ajouter
+            {% elseif path('category_edit') %}
+                Modifier
+        {% endif %}
+         une catégorie
+    </h1>
+
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            {# J'affiche mon formulaire #}
+            {{ form_start(categoryForm) }}
+                    {{ form_label(categoryForm.name, 'Nom de la catégorie') }}
+                    {{ form_widget(categoryForm.name) }}
+
+            {{ form_widget(categoryForm) }}
+
+            <button class="btn btn-primary" formnovalidate>
+                {% if path('category_create') %}
+                    Ajouter
+                {% elseif path('category_edit') %}
+                    Modifier
+                {% endif %}
+            </button>
+            {{ form_end(categoryForm) }}
+        </div>
+    </div>
+{% endblock %}

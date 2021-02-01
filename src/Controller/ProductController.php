@@ -18,17 +18,24 @@ class ProductController extends AbstractController
     /**
      * @Route("/products", name="product_list")
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
 
         $repository = $this->getDoctrine()->getRepository(Product::class);
 
-        $products = $repository->findAll();
+        $products =$repository->findAll();
         $lastProduct = end($products);
+
+       // dump($request->get('colors'));
+        if (!empty($request->get('colors'))) {
+
+            $products = $repository->findAllWithFilters(
+                $request->get('colors')
+            );
+        }
 
         $categoryRepository = $this->getDoctrine()->getRepository(Category::class);
         $categories = $categoryRepository->findAll();
-
 
         return $this->render('product/list.html.twig', [
             'products' => $products,
@@ -65,5 +72,14 @@ class ProductController extends AbstractController
             'formReview' => $formReview->createView(),
         ]);
     }
+
+    /**
+     * @Route("/admin/product/new", name="product_create")
+     */
+    public function create(): Response
+    {
+        return $this->render('product/create.html.twig');
+    }
+
     
 }
