@@ -7,6 +7,7 @@ use App\Entity\Product;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +19,7 @@ class CategoryController extends AbstractController
     /**
      * @Route("/category/{option}", name="category_show")
      */
-     public function show(ProductRepository $repositoryProduct, $option, CategoryRepository $categoryRepository, Request $request): Response
+     public function show(ProductRepository $repositoryProduct, $option, CategoryRepository $categoryRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $category = $categoryRepository->findOneBy(['name' => $option]);
 
@@ -38,10 +39,17 @@ class CategoryController extends AbstractController
 
         $categories = $categoryRepository->findAll();
 
+        $paginatorCat = $paginator->paginate(
+          $products,
+            $request->query->getInt('page', 1),
+            6
+        );
+
         return $this->render('category/show.html.twig', [
             'products' => $products,
             'lastProduct' => $lastProduct,
             'categories' => $categories,
+            'paginatorCat' => $paginatorCat,
         ]);
     }
 

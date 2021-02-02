@@ -85,12 +85,10 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/data-fixtures" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/doctrine-fixtures-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/beberlei/doctrineextensions" />
-
       <excludeFolder url="file://$MODULE_DIR$/vendor/antishov/doctrine-extensions-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/gedmo/doctrine-extensions" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/behat/transliterator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-intl-idn" />
-
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/security-http" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/security-guard" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/security-bundle" />
@@ -99,8 +97,9 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/egulias/email-validator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-intl-idn" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/mailer" />
-
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/mime" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/knplabs/knp-paginator-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/knplabs/knp-components" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
