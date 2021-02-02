@@ -18,11 +18,6 @@ class Review
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $username;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $creation_review;
@@ -49,18 +44,6 @@ class Review
      */
     private $user;
 
-
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
 
     public function getCreationReview(): ?\DateTimeInterface
     {

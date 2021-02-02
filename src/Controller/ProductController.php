@@ -8,8 +8,10 @@ use App\Entity\Product;
 use App\Form\ProductType;
 
 use App\Entity\Review;
+use App\Entity\User;
 use App\Form\ReviewType;
 use App\Repository\ProductRepository;
+use App\Repository\ReviewRepository;
 use DateTime;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -54,7 +56,7 @@ class ProductController extends AbstractController
     /**
      * @Route("/product/{slug}_{id}", name="product_show", requirements={"slug"="[a-z0-9\-]*"})
      */
-    public function show(Product $product, Request $request, $id, $slug, ProductRepository $productRepository)
+    public function show(Product $product, Request $request, $slug, ReviewRepository $reviewRepository)
     {
         $countReview = count($product->getReviewsList());
 
@@ -70,19 +72,24 @@ class ProductController extends AbstractController
         $review = new Review();
         $formReview = $this->createForm(ReviewType::class, $review);
         $formReview->handleRequest($request);
-        
-        $product = $productRepository->find($id);
+    
 
-        /* Faire le requète pour l'ajout de la review ici */
+        $usernames = $reviewRepository->findAllUsernamesOfReviewsPerProduct($product->getId());
+
+        /* Faire le requête pour l'ajout de la review ici */
         /* #DEBUT [REQUEST FOR ADD REVIEW] */
             if($formReview->isSubmitted() && $formReview->isValid()){
                 $review->setProduct($product);
+                /** @var User $user
+                */
+                $user = $this->getUser();
+                $review->setUser($user);
                 $review->setCreationReview(new DateTime('NOW'));
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($review);
                 $entityManager->flush();
 
-                return $this->redirectToRoute('product_show', ['slug' => $slug, 'id' => $id]);
+                return $this->redirectToRoute('product_show', ['slug' => $slug, 'id' => $product->getId()]);
             }
         /* #FIN [REQUEST FOR ADD REVIEW] */
 
@@ -92,7 +99,7 @@ class ProductController extends AbstractController
             'countReview' => $countReview,
             'mark' => $mark,
             'formReview' => $formReview->createView(),
-            
+            'usernames' => $usernames,
         ]);
     }
 
