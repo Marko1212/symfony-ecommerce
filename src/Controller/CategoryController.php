@@ -29,21 +29,27 @@ class CategoryController extends AbstractController
         $allProduct = $repository->findAll();
         $lastProduct = end($allProduct);
 
+        $paginatorCat = $paginator->paginate(
+            $products,
+              $request->query->getInt('page', 1),
+              6
+          );
+
         if (!empty($request->get('colors'))) {
 
             $products = $repository->findAllPerCategoryWithFilters(
                 $request->get('colors'),
                 $category->getId()
             );
+            $paginatorCat = $paginator->paginate(
+                $products,
+                  $request->query->getInt('page', 1),
+                  6
+              );
         }
 
         $categories = $categoryRepository->findAll();
-
-        $paginatorCat = $paginator->paginate(
-          $products,
-            $request->query->getInt('page', 1),
-            6
-        );
+      
 
         return $this->render('category/show.html.twig', [
             'products' => $products,
