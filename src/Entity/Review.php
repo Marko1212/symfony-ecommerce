@@ -45,6 +45,11 @@ class Review
     private $user;
 
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
     public function getCreationReview(): ?\DateTimeInterface
     {
         return $this->creation_review;
