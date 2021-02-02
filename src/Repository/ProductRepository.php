@@ -126,6 +126,15 @@ class ProductRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    // recherche des produits selon le nom
+    public function findAllByName($filterName) {
+        $qb = $this->createQueryBuilder('p');
+        $qb->andWhere('p.name LIKE :name')
+            ->setParameter('name','%'.$filterName.'%');
+
+        return $qb->getQuery()->getResult();
+    }
+
 
 
 }

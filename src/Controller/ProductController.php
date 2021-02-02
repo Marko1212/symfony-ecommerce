@@ -54,6 +54,14 @@ class ProductController extends AbstractController
         $categoryRepository = $this->getDoctrine()->getRepository(Category::class);
         $categories = $categoryRepository->findAll();
 
+        /* DEBUT RECHERCHE DE PRODUITS*/
+        if (!empty($request->get('filterName'))) {
+            $products = $repository->findAllByName(
+                $request->get('filterName')
+            );
+        }
+
+        /* FIN RECHERCHE DE PRODUITS*/
         return $this->render('product/list.html.twig', [
             'products' => $products,
             'lastProduct' => $lastProduct,
