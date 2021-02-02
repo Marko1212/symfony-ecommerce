@@ -12,6 +12,8 @@ use App\Entity\User;
 use App\Form\ReviewType;
 use App\Repository\ProductRepository;
 use App\Repository\ReviewRepository;
+use Knp\Component\Pager\PaginatorInterface; // Nous appelons le bundle KNP Paginator
+
 use DateTime;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,13 +28,20 @@ class ProductController extends AbstractController
     /**
      * @Route("/products", name="product_list")
      */
-    public function index(Request $request): Response
+    public function index(Request $request, PaginatorInterface $paginatorInterface): Response
     {
 
         $repository = $this->getDoctrine()->getRepository(Product::class);
 
         $products =$repository->findAll();
         $lastProduct = end($products);
+
+        $paginatorProducts = $paginatorInterface->paginate(
+            $products,
+            $request->query->getInt('page', 1),
+            6
+        );
+
 
        // dump($request->get('colors'));
         if (!empty($request->get('colors'))) {
@@ -49,6 +58,7 @@ class ProductController extends AbstractController
             'products' => $products,
             'lastProduct' => $lastProduct,
             'categories' => $categories,
+            'paginatorProducts' => $paginatorProducts,
         ]);
 
     }
