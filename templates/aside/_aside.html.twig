@@ -19,7 +19,6 @@
                                     <input type="checkbox" name="colors[]" {% if selected %}checked{% endif %} value="{{ color }}" class="form-check-input" id="color-{{ color }}">
                                     <label class="form-check-label" for="color-{{ color }}">{{ color | capitalize }}</label>
                                         {% set arrayColorsWithoutDuplicates = arrayColorsWithoutDuplicates|merge([color]) %}
-
                                 </div>
                           </li>
                                     {% endif %}

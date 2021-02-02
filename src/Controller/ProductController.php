@@ -49,6 +49,11 @@ class ProductController extends AbstractController
             $products = $repository->findAllWithFilters(
                 $request->get('colors')
             );
+            $paginatorProducts = $paginatorInterface->paginate(
+                $products,
+                $request->query->getInt('page', 1),
+                6
+            );
         }
 
         $categoryRepository = $this->getDoctrine()->getRepository(Category::class);
@@ -58,6 +63,11 @@ class ProductController extends AbstractController
         if (!empty($request->get('filterName'))) {
             $products = $repository->findAllByName(
                 $request->get('filterName')
+            );
+            $paginatorProducts = $paginatorInterface->paginate(
+                $products,
+                $request->query->getInt('page', 1),
+                6
             );
         }
 
