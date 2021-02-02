@@ -10,7 +10,7 @@ use App\Form\ProductType;
 use App\Entity\Review;
 use App\Entity\User;
 use App\Form\ReviewType;
-use App\Repository\ProductRepository;
+//use App\Repository\ProductRepository;
 use App\Repository\ReviewRepository;
 use Knp\Component\Pager\PaginatorInterface; // Nous appelons le bundle KNP Paginator
 
@@ -187,7 +187,7 @@ class ProductController extends AbstractController
             }
 
             $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', 'L\'annonce a bien été modifiée');
+            $this->addFlash('success', 'Le produit a bien été modifié');
             return $this->redirectToRoute('product_list');
         }
         return $this->render('product/edit.html.twig', [
