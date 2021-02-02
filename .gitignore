@@ -7,4 +7,7 @@
 /public/bundles/
 /var/
 /vendor/
+/public/img/*
+!/public/img/default.jfif
+!/public/img/fixtures/
 ###< symfony/framework-bundle ###

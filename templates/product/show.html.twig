@@ -115,7 +115,7 @@
                                         <i class="fa fa-star-o" aria-hidden="true"></i>
                                     {% endif %}
                                 {% endfor %}
-                                par {{review.username}}
+                              {{review.user.username}}
                                 <p class="blockquote">
                                 <p class="mb-0">{{ review.comment }}</p>
                                 </p>
@@ -124,12 +124,6 @@
                         {% endfor %}
 
                         {{ form_start(formReview) }}
-                            <div class="form-group">
-                                {{ form_label(formReview.username, null, {
-                                    'label_attr': {'class': ''}
-                                    }) }}
-                                {{ form_widget(formReview.username, {'attr': {'class': 'form-control'}}) }}
-                            </div>
                             
                             <div class="form-group">
                                 {{ form_label(formReview.mark, null, {

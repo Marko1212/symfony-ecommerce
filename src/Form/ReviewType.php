@@ -14,14 +14,14 @@ class ReviewType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', null, [
+  /*           ->add('username', null, [
                 'label' => 'Nom',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Le nom d\'utilisateur est obligatoire'
                     ]),
                 ],
-            ])
+            ]) */
             ->add('mark', ChoiceType::class, [
                 'label' => 'Note',
                 'choices' => [

@@ -6,12 +6,16 @@ use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  */
 class Product
 {
+
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -21,25 +25,35 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank
+     * @Assert\Length(min=3)
      */
     private $name;
 
     /**
+     * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
+     * @Assert\Length(min=10)
      */
     private $description;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank
+     * @Assert\Type("integer")
+     * @Assert\Range(min=99, max=2000)
      */
     private $price;
 
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
     private $creation_date;
@@ -65,20 +79,16 @@ class Product
     private $special_offer;
 
     /**
+     * @Assert\NotBlank
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity=Review::class, mappedBy="product", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Review::class, mappedBy="product", orphanRemoval=true)                 
      */
     private $reviews_list;
-
-
-
-
-
 
 
     public function __construct()

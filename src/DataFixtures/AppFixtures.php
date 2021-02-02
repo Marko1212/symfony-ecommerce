@@ -87,7 +87,7 @@ class AppFixtures extends Fixture
                         $review = new Review();
 
                         /* #DEBUT [GENERATION DES DONNEES REVIEWS] */
-                        $username = $faker->firstName();
+                       
                         $dateReview = new dateTime('NOW');
                         $mark = $faker->numberBetween(1, 5);
                         $comment = $faker->text(150);
@@ -96,7 +96,6 @@ class AppFixtures extends Fixture
 
                         /* #DEBUT [SETTING DES REVIEWS] */
                          $review->setProduct($product);
-                         $review->setUsername($username);
                          $review->setCreationReview($dateReview);
                          $review->setMark($mark);
                          $review->setComment($comment);

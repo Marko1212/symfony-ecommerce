@@ -58,10 +58,22 @@ class ReviewRepository extends ServiceEntityRepository
     {
         $query = $this->getEntityManager()->createQuery('SELECT AVG(r.mark) as avg, p.name, p.slug, p.price, p.url_image, p.description, p.id
                 FROM App\Entity\Review r
-                JOIN App\Entity\Product p WHERE p.id = r.product
+                JOIN r.product as p WHERE p.id = r.product
                 GROUP BY r.product 
                 ORDER BY avg DESC');
         $query->setMaxResults(4);
+        return $query->getResult();
+    }
+
+        /**
+     * Permet d'obtenir les usernames des users qui ont laissé un commentaire sur un produit donné
+     */
+
+    public function findAllUsernamesOfReviewsPerProduct($productId)
+    {
+        $query = $this->getEntityManager()->createQuery('SELECT u.username as username from App\Entity\Review as r join r.user as u where r.product = ' . $productId);
+        
+    
         return $query->getResult();
     }
 }
