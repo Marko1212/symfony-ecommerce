@@ -22,8 +22,10 @@
                 <div class="card bg-light mb-3">
                     <div class="card-body">
                         {% if product.specialoffer == 0 %}
+                        <p class="price_discounted">{{product.specialoffer/100 * product.price }} &euro;</p>
                         <p class="price_discounted">{{ product.price }} &euro;</p>
                         {% else %}
+                        <p class="price_discounted">{{product.specialoffer/100 * product.price }} &euro;</p>
                         <p class="price_discounted"><s>{{ product.price }}</s> &euro;</p>
                         {% endif %}
 
