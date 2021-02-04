@@ -27,7 +27,13 @@
                         <div class="card">
                             <img id="img-card" class="card-img-top" src="{{ asset('img/' ~ product.urlImage) }}" alt="{{ product.name }}">
                             <div class="card-body">
-                                <h4 class="card-title"><a href="{{ path('product_show', { slug : product.slug, id : product.id}) }}" title="View Product">{{ product.name }}</a></h4>
+                                <h4 class="card-title"><a href="{{ path('product_show', { slug : product.slug, id : product.id}) }}" title="View Product">
+                                        {% if product.name | length > 14 %}
+                                            {{ product.name | slice(0, 14) }}...
+                                        {% else %}
+                                            {{ product.name }}
+                                        {% endif %}
+                                    </a></h4>
                                 <p class="card-text">{{ product.description }}</p>
                                 <div class="row">
                                     <div class="col">

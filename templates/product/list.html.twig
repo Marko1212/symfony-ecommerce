@@ -32,8 +32,8 @@
 								<div class="card-body">
 									<h4 class="card-title">
 										<a href="{{ path('product_show', { slug : product.slug, id : product.id}) }}" title="View Product">
-										{% if product.name | length > 15 %}
-                                            {{ product.name | slice(0, 15) }}...
+										{% if product.name | length > 14 %}
+                                            {{ product.name | slice(0, 14) }}...
                                         {% else %}
                                             {{ product.name }}
                                        {% endif %}
