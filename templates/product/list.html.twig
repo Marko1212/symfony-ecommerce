@@ -50,14 +50,14 @@
 										</div>
 										<div class="col">
 											<a href="#" class="btn btn-success btn-block">Ajouter au panier</a>
-											<div class="mt-3 d-flex flex-column">
+											{# <div class="mt-3 d-flex flex-column">
 												<a href="{{ path('product_edit', {id: product.id}) }}" class="btn btn-primary">Modifier</a>
 												<form method="post" action="{{ path('product_delete', {id: product.id}) }}">
 													<input type="hidden" name="_method" value="DELETE">
 													<input type="hidden" name="_token" value="{{csrf_token('delete' ~ product.id)}}">
 													<button class="btn btn-danger w-100 mt-3">Supprimer</button>
 												</form>
-											</div>
+											</div> #}
 										</div>
 									</div>
 								</div>
