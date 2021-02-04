@@ -58,7 +58,11 @@
                         <img class="img-fluid" src="{{ asset('img/' ~ lastProduct.getUrlImage())}}" alt="{{ lastProduct.name }}">
                         <h5 class="card-title mt-3">{{ lastProduct.name }}</h5>
                         <p class="card-text">{{ lastProduct.description }}</p>
+                        {% if lastProduct.specialoffer == 0 %}
                         <p class="bloc_left_price">{{ lastProduct.price }} &euro;</p>
+                        {% else %}
+                        <p class="bloc_left_price">{{lastProduct.specialoffer/100 * lastProduct.price }} &euro;</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>

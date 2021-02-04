@@ -42,8 +42,11 @@
 									<p class="card-text">{{ product.description }}</p>
 									<div class="row">
 										<div class="col">
-											<p class="btn btn-danger btn-block">{{ product.price }}
-												&euro;</p>
+										{% if product.specialoffer == 0 %}
+											<p class="btn btn-danger btn-block">{{ product.price }} &euro;</p>
+                        				{% else %}
+											<p class="btn btn-danger btn-block">{{ product.specialoffer/100 * product.price }} &euro;</p>
+                        				{% endif %}		
 										</div>
 										<div class="col">
 											<a href="#" class="btn btn-success btn-block">Ajouter au panier</a>
