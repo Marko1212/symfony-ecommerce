@@ -66,7 +66,7 @@ class AppFixtures extends Fixture
                     }
                     $price = $faker->numberBetween($min = 99, $max = 2000);
                     $dateProduct = new DateTime('NOW');
-                    $crush = $faker->boolean(10); 
+                    $crush = $faker->boolean(10);
                     $colors = [];
                     $randomIntProduct = $faker->randomDigitNotNull();
                     for($j = 1; $j <= $randomIntProduct ; $j++){

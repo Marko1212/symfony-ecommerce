@@ -80,9 +80,11 @@
             <div class="row">
                 <div class="col-lg-10"><h1 class="jumbotron-heading">Produits</h1>
                 </div>
+                {% if is_granted('ROLE_ADMIN') %}
            <div class="col-lg-2">
                <a href="{{ path('product_create') }}" class="btn btn-primary">Créer un produit</a>
            </div>
+           {% endif %}
             </div>
         {% elseif app.request.get('_route') == 'contact' %}
             <h1 class="jumbotron-heading">Contact</h1>

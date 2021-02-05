@@ -43,12 +43,14 @@ class ProductController extends AbstractController
         );
 
 
-       // dump($request->get('colors'));
+       //dump($request->get('colors'));
         if (!empty($request->get('colors'))) {
 
             $products = $repository->findAllWithFilters(
                 $request->get('colors')
             );
+            dump($products);
+            
             $paginatorProducts = $paginatorInterface->paginate(
                 $products,
                 $request->query->getInt('page', 1),
